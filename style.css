@@ -184,11 +184,12 @@ h2 {
   position: absolute;
   top: 38%;
   left: 50%;
+  transform: translate(-50%, -50%);
   width: clamp(440px, 62vw, 760px);
   height: auto;
   z-index: 0;
   pointer-events: none;
-  animation: gentleDrift 8s ease-in-out infinite, fadeIn 1400ms ease both;
+  animation: gentleDrift 8s ease-in-out infinite;
 }
 
 .landing-wrap > * {
@@ -471,53 +472,66 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
   50%      { transform: translate(-50%, calc(-50% - 10px)) scale(1.008); }
 }
 
-/* ── Landing page — staggered entrance ── */
-.landing-wrap .mark {
-  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 100ms;
+@keyframes landingEntrance {
+  0%   { opacity: 0; transform: translateY(22px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.landing-wrap .eyebrow {
-  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 300ms;
-}
-
-.landing-wrap .quote-line {
-  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 550ms;
-}
-
+/* ── Landing page — staggered entrance ──
+   Uses forwards fill-mode so elements stay visible after animation ends.
+   Initial opacity set explicitly so content is visible even if animations
+   are blocked (e.g. Brave's anti-fingerprinting). ── */
+.landing-wrap .mark,
+.landing-wrap .eyebrow,
+.landing-wrap .quote-line,
 .landing-wrap .quiet-link {
-  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 750ms;
+  opacity: 0;
+  animation-name: landingEntrance;
+  animation-duration: 900ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
 }
+
+.landing-wrap .mark     { animation-delay: 100ms; }
+.landing-wrap .eyebrow  { animation-delay: 300ms; }
+.landing-wrap .quote-line { animation-delay: 550ms; }
+.landing-wrap .quiet-link  { animation-delay: 750ms; }
 
 .landing-wrap ~ footer.site {
-  animation: fadeIn 800ms ease both;
+  opacity: 0;
+  animation: fadeIn 800ms ease forwards;
   animation-delay: 1s;
+}
+
+/* Fallback: if animations are disabled or blocked, show content immediately */
+@media (prefers-reduced-motion: reduce) {
+  .landing-wrap .mark,
+  .landing-wrap .eyebrow,
+  .landing-wrap .quote-line,
+  .landing-wrap .quiet-link,
+  .landing-wrap ~ footer.site {
+    opacity: 1 !important;
+  }
 }
 
 /* ── Interior page header — staggered entrance ── */
 .page-header .mark,
-.page-header .mark--sm {
-  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 50ms;
-}
-
-.page-header .eyebrow {
-  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 200ms;
-}
-
-.page-header h1 {
-  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 350ms;
-}
-
+.page-header .mark--sm,
+.page-header .eyebrow,
+.page-header h1,
 .page-header .dek {
-  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 480ms;
+  opacity: 0;
+  animation-name: landingEntrance;
+  animation-duration: 700ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
 }
+
+.page-header .mark,
+.page-header .mark--sm { animation-delay: 50ms; }
+.page-header .eyebrow   { animation-delay: 200ms; }
+.page-header h1          { animation-delay: 350ms; }
+.page-header .dek        { animation-delay: 480ms; }
 
 /* ── Scroll-driven reveals (progressive enhancement) ── */
 @supports (animation-timeline: view()) {
@@ -608,5 +622,19 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .landing-wrap .mark,
+  .landing-wrap .eyebrow,
+  .landing-wrap .quote-line,
+  .landing-wrap .quiet-link,
+  .landing-wrap ~ footer.site,
+  .page-header .mark,
+  .page-header .mark--sm,
+  .page-header .eyebrow,
+  .page-header h1,
+  .page-header .dek {
+    opacity: 1 !important;
+  }
 }
+
 
