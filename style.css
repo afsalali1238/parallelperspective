@@ -184,11 +184,11 @@ h2 {
   position: absolute;
   top: 38%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: clamp(440px, 62vw, 760px);
   height: auto;
   z-index: 0;
   pointer-events: none;
+  animation: gentleDrift 8s ease-in-out infinite, fadeIn 1400ms ease both;
 }
 
 .landing-wrap > * {
@@ -218,9 +218,20 @@ h2 {
   font-size: 0.8rem;
   color: var(--muted);
   text-decoration: none;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 2px;
-  transition: color 180ms ease, border-color 180ms ease;
+  padding-bottom: 3px;
+  transition: color 280ms ease;
+}
+
+.quiet-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  transition: background 280ms ease, transform 280ms ease;
+  transform-origin: center;
 }
 
 /* invisible expanded hit area — keeps the quiet visual footprint,
@@ -236,7 +247,11 @@ h2 {
 
 .quiet-link:hover {
   color: var(--accent);
-  border-color: var(--accent);
+}
+
+.quiet-link:hover::after {
+  background: var(--accent);
+  transform: scaleX(1.15);
 }
 
 a:focus-visible {
@@ -269,8 +284,19 @@ footer.site a {
   display: inline-block;
   color: var(--muted);
   text-decoration: none;
-  border-bottom: 1px solid var(--line);
-  transition: color 180ms ease, border-color 180ms ease;
+  padding-bottom: 2px;
+  transition: color 280ms ease;
+}
+footer.site a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  transition: background 280ms ease, transform 280ms ease;
+  transform-origin: center;
 }
 footer.site a::before {
   content: "";
@@ -280,7 +306,8 @@ footer.site a::before {
   left: -10px;
   right: -10px;
 }
-footer.site a:hover { color: var(--accent); border-color: var(--accent); }
+footer.site a:hover { color: var(--accent); }
+footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15); }
 
 /* Manifesto page */
 .page-header {
@@ -422,3 +449,164 @@ footer.site a:hover { color: var(--accent); border-color: var(--accent); }
 .error-body .quote-line {
   margin: 0 0 2.2em;
 }
+
+/* ═══════════════════════════════════════════════════════
+   MOTION SYSTEM
+   Entrance animations, scroll-driven reveals, micro-interactions.
+   All animation respects prefers-reduced-motion (see end of file).
+   ═══════════════════════════════════════════════════════ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes gentleDrift {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-50%, calc(-50% - 10px)) scale(1.008); }
+}
+
+/* ── Landing page — staggered entrance ── */
+.landing-wrap .mark {
+  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 100ms;
+}
+
+.landing-wrap .eyebrow {
+  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 300ms;
+}
+
+.landing-wrap .quote-line {
+  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 550ms;
+}
+
+.landing-wrap .quiet-link {
+  animation: fadeUp 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 750ms;
+}
+
+.landing-wrap ~ footer.site {
+  animation: fadeIn 800ms ease both;
+  animation-delay: 1s;
+}
+
+/* ── Interior page header — staggered entrance ── */
+.page-header .mark,
+.page-header .mark--sm {
+  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 50ms;
+}
+
+.page-header .eyebrow {
+  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 200ms;
+}
+
+.page-header h1 {
+  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 350ms;
+}
+
+.page-header .dek {
+  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 480ms;
+}
+
+/* ── Scroll-driven reveals (progressive enhancement) ── */
+@supports (animation-timeline: view()) {
+  .manifesto-body p,
+  .circle-body section,
+  .circle-body .pull-quote,
+  .panel-block,
+  .excerpt-block,
+  .lens-divider,
+  .closing-line,
+  .reach-out-body .context-line,
+  .reach-out-body #reach-out-action,
+  .reach-out-body .confirmation {
+    animation: fadeUp 1ms ease both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+
+/* ── Minimal navigation ── */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 22px 24px;
+  z-index: 100;
+}
+
+.site-nav a {
+  display: inline-block;
+  text-decoration: none;
+  opacity: 0;
+  animation: fadeIn 600ms ease both;
+  animation-delay: 400ms;
+}
+
+.site-nav .nav-mark {
+  width: 22px;
+  height: auto;
+  opacity: 0.55;
+  transition: opacity 220ms ease;
+}
+
+.site-nav a:hover .nav-mark {
+  opacity: 1;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 640px) {
+  .landing-wrap {
+    padding: 60px 20px;
+  }
+
+  .page-header {
+    padding: 72px 20px 16px;
+  }
+
+  footer.site {
+    padding: 40px 20px 60px;
+  }
+
+  .manifesto-body,
+  .circle-body {
+    padding: 16px 20px 10px;
+  }
+
+  .panel-block {
+    padding: 20px 22px;
+  }
+
+  .reach-out-body,
+  .error-body {
+    padding: 16px 20px 10px;
+  }
+
+  .site-nav {
+    padding: 16px 20px;
+  }
+}
+
+/* ═══ REDUCED MOTION ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
