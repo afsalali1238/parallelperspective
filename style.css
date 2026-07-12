@@ -3,15 +3,20 @@
    Do not introduce new colors/fonts without updating that doc first. */
 
 :root {
-  --paper: #EDE8DC;
-  --panel: #E4DDCD;
-  --ink: #1E1B17;
-  --ink-soft: #3C362E;
-  --muted: #6E665A;
+  /* Direction A — "warm resolved" (Palette & Logo Review, 2026-07-11).
+     Deepens accent, darkens muted, lightens accent-soft — clears both real
+     WCAG AA failures (muted-on-panel 4.2:1, accent-soft-on-ink 4.3:1) with
+     margin, while staying the closest possible evolution of the shipped
+     brand. See Palette & Logo Review - Fixed.html for the full comparison. */
+  --paper: #EFEADE;
+  --panel: #E4DCC9;
+  --ink: #1C1813;
+  --ink-soft: #3A342B;
+  --muted: #635B4D;
   --muted-dark: #D8D0C0;
-  --line: #CDC3B0;
-  --accent: #9A4B2E;
-  --accent-soft: #B86B4A;
+  --line: #CBC1AC;
+  --accent: #96462A;
+  --accent-soft: #C67B54;
 
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'JetBrains Mono', monospace;
@@ -159,6 +164,8 @@ h2 {
 
 /* Landing */
 .landing-wrap {
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -168,8 +175,29 @@ h2 {
   padding: 90px 24px;
 }
 
+/* Oversized watermark of the mark, sitting behind the hero content. Flat only
+   (no gradient/blur/glow) — scale and opacity are the only variables used,
+   both already-established techniques in the system (see §02 on-Sienna
+   variant, which uses stroke-opacity for the same reason: to stay flat while
+   still reading as two distinct tones). Geometry is the locked r=90/d=60. */
+.hero-mark-bg {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(440px, 62vw, 760px);
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.landing-wrap > * {
+  position: relative;
+  z-index: 1;
+}
+
 .mark {
-  width: 92px;
+  width: 104px;
   height: auto;
   margin-bottom: 28px;
 }
@@ -177,8 +205,10 @@ h2 {
 .landing-wrap .eyebrow { margin-bottom: 1.6em; }
 
 .landing-wrap .quote-line {
-  max-width: 560px;
-  margin: 0 0 2.2em;
+  max-width: 620px;
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  line-height: 1.42;
+  margin: 0 0 2.4em;
 }
 
 .quiet-link {
@@ -205,4 +235,190 @@ h2 {
 }
 
 .quiet-link:hover {
-  color: var(--accen
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+a:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Footer — shared across all pages */
+footer.site {
+  padding: 60px 24px 90px;
+  text-align: center;
+}
+
+footer.site .mark-icon {
+  width: 22px;
+  height: auto;
+  opacity: 0.8;
+  margin-bottom: 14px;
+}
+
+footer.site .foot-text {
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+footer.site a {
+  position: relative;
+  display: inline-block;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  transition: color 180ms ease, border-color 180ms ease;
+}
+footer.site a::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  bottom: -14px;
+  left: -10px;
+  right: -10px;
+}
+footer.site a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Manifesto page */
+.page-header {
+  padding: 90px 24px 20px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.page-header .mark { width: 70px; }
+.page-header .mark--sm { width: 56px; }
+
+.manifesto-body {
+  padding: 20px 24px 10px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.manifesto-body p {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: clamp(1.08rem, 2.1vw, 1.28rem);
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin: 0 0 1.4em;
+}
+
+.manifesto-body p strong {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.closing-line {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: var(--accent);
+  text-align: center;
+  margin: 1.6em 0 0.4em;
+}
+
+/* Circle page — deeper, more explanatory read; sits between the manifesto's
+   pure feeling and a spec document. Body copy stays in the quote font so the
+   page still reads as writing, not documentation. */
+.circle-body {
+  padding: 20px 24px 10px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.circle-body section {
+  margin: 0 0 3rem;
+}
+
+.circle-body p {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: clamp(1.02rem, 1.9vw, 1.15rem);
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin: 0 0 1.3em;
+}
+
+.circle-nav {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 2.4em 0 0;
+}
+
+/* Excerpt block — a genuine quoted passage from outside writing, deliberately
+   NOT in the site's lowercase brand voice (it's someone else's sentence, quoted
+   honestly). Border uses --line, not --accent, to read as "quoted" rather than
+   "brand-defined" (see .panel-block, which uses the accent border for that). */
+.excerpt-block {
+  margin: 0 0 1.6em;
+  padding: 0 0 0 24px;
+  border-left: 2px solid var(--line);
+}
+
+.excerpt-block p {
+  font-family: var(--font-quote);
+  font-style: normal;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0 0 0.9em;
+}
+
+.excerpt-block cite {
+  display: block;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.4em;
+}
+
+/* Reach-out page */
+.reach-out-body {
+  padding: 20px 24px 10px;
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.context-line {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 0 0 2.4em;
+}
+
+#reach-out-action {
+  margin: 0 0 2.2em;
+}
+
+.confirmation {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* 404 page */
+.error-body {
+  padding: 20px 24px 10px;
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.error-body .quote-line {
+  margin: 0 0 2.2em;
+}

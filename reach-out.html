@@ -12,8 +12,11 @@
 <meta property="og:image" content="https://parallelperspective.vercel.app/assets/og-image.png">
 <meta property="og:url" content="https://parallelperspective.vercel.app/reach-out.html">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="this isn't a store. there's no cart here, and reaching out doesn't promise anything back.">
+<link rel="canonical" href="https://parallelperspective.vercel.app/reach-out.html">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet">
@@ -22,7 +25,7 @@
 <body>
 
 <header class="page-header">
-  <img src="assets/logo.svg" alt="" class="mark" style="width:56px;">
+  <img src="assets/logo.svg" alt="" class="mark mark--sm" width="200" height="260">
   <h1 class="sr-only">reach out</h1>
   <div class="eyebrow">parallel perspective</div>
 </header>
@@ -30,4 +33,18 @@
 <main class="reach-out-body">
   <p class="context-line">this isn't a store. there's no cart here, and reaching out doesn't promise anything back. it's read by a person, when there's time to read it properly.</p>
 
-  <!--
+  <!-- reach-out module — channel: mailto. swap by editing this block only, per website-docs/04-technical-build-guide.md -->
+  <div id="reach-out-action" data-channel="mailto" data-target="hello@parallelperspective.com">
+    <a href="mailto:hello@parallelperspective.com" class="quiet-link">write to us</a>
+  </div>
+
+  <p class="confirmation">if you write, it's read by a person. you'll hear back if it's a match.</p>
+</main>
+
+<footer class="site">
+  <img src="assets/logo.svg" alt="" class="mark-icon" width="200" height="260">
+  <div class="foot-text"><a href="manifesto.html">the manifesto</a> · <a href="circle.html">the circle</a></div>
+</footer>
+
+</body>
+</html>

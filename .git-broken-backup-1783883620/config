@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[user]
+	email = afsalali8321@gmail.com
+	name = Afsal Ali
+[remote "origin"]
+	url = https://github.com/afsalali1238/parallelperspective.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
