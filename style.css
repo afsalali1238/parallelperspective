@@ -478,60 +478,45 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
 }
 
 /* ── Landing page — staggered entrance ──
-   Uses forwards fill-mode so elements stay visible after animation ends.
-   Initial opacity set explicitly so content is visible even if animations
-   are blocked (e.g. Brave's anti-fingerprinting). ── */
-.landing-wrap .mark,
-.landing-wrap .eyebrow,
-.landing-wrap .quote-line,
-.landing-wrap .quiet-link {
-  opacity: 0;
-  animation-name: landingEntrance;
-  animation-duration: 900ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  animation-fill-mode: forwards;
+   Progressive enhancement: if CSS animations run, you see the stagger.
+   If blocked (Brave, etc.), content is visible immediately — no opacity:0. ── */
+.landing-wrap .mark {
+  animation: landingEntrance 900ms cubic-bezier(0.16, 1, 0.3, 1) 100ms backwards;
 }
 
-.landing-wrap .mark     { animation-delay: 100ms; }
-.landing-wrap .eyebrow  { animation-delay: 300ms; }
-.landing-wrap .quote-line { animation-delay: 550ms; }
-.landing-wrap .quiet-link  { animation-delay: 750ms; }
+.landing-wrap .eyebrow {
+  animation: landingEntrance 900ms cubic-bezier(0.16, 1, 0.3, 1) 300ms backwards;
+}
+
+.landing-wrap .quote-line {
+  animation: landingEntrance 900ms cubic-bezier(0.16, 1, 0.3, 1) 550ms backwards;
+}
+
+.landing-wrap .quiet-link {
+  animation: landingEntrance 900ms cubic-bezier(0.16, 1, 0.3, 1) 750ms backwards;
+}
 
 .landing-wrap ~ footer.site {
-  opacity: 0;
-  animation: fadeIn 800ms ease forwards;
-  animation-delay: 1s;
-}
-
-/* Fallback: if animations are disabled or blocked, show content immediately */
-@media (prefers-reduced-motion: reduce) {
-  .landing-wrap .mark,
-  .landing-wrap .eyebrow,
-  .landing-wrap .quote-line,
-  .landing-wrap .quiet-link,
-  .landing-wrap ~ footer.site {
-    opacity: 1 !important;
-  }
+  animation: fadeIn 800ms ease 1s backwards;
 }
 
 /* ── Interior page header — staggered entrance ── */
 .page-header .mark,
-.page-header .mark--sm,
-.page-header .eyebrow,
-.page-header h1,
-.page-header .dek {
-  opacity: 0;
-  animation-name: landingEntrance;
-  animation-duration: 700ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  animation-fill-mode: forwards;
+.page-header .mark--sm {
+  animation: landingEntrance 700ms cubic-bezier(0.16, 1, 0.3, 1) 50ms backwards;
 }
 
-.page-header .mark,
-.page-header .mark--sm { animation-delay: 50ms; }
-.page-header .eyebrow   { animation-delay: 200ms; }
-.page-header h1          { animation-delay: 350ms; }
-.page-header .dek        { animation-delay: 480ms; }
+.page-header .eyebrow {
+  animation: landingEntrance 700ms cubic-bezier(0.16, 1, 0.3, 1) 200ms backwards;
+}
+
+.page-header h1 {
+  animation: landingEntrance 700ms cubic-bezier(0.16, 1, 0.3, 1) 350ms backwards;
+}
+
+.page-header .dek {
+  animation: landingEntrance 700ms cubic-bezier(0.16, 1, 0.3, 1) 480ms backwards;
+}
 
 /* ── Scroll-driven reveals (progressive enhancement) ── */
 @supports (animation-timeline: view()) {
@@ -622,19 +607,7 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-
-  .landing-wrap .mark,
-  .landing-wrap .eyebrow,
-  .landing-wrap .quote-line,
-  .landing-wrap .quiet-link,
-  .landing-wrap ~ footer.site,
-  .page-header .mark,
-  .page-header .mark--sm,
-  .page-header .eyebrow,
-  .page-header h1,
-  .page-header .dek {
-    opacity: 1 !important;
-  }
 }
+
 
 
