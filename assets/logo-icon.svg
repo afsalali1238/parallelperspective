@@ -1,0 +1,11 @@
+<svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Parallel Perspective — The Open Eye mark (variant D, LOCKED) -->
+  <!-- Top circle: Ink Charcoal #1E1B17 | Bottom circle: Burnt Sienna #9A4B2E | Pupil: Ink Charcoal -->
+  <!-- Geometry: r=90, centre offset d=60 (d/r=2/3), pupil r=13 -->
+  <!-- Dark bg variant: top circle stays Ink Charcoal (fades into dark field) -->
+  <!-- bottom circle stays Sienna (the revealing element) -->
+  <!-- pupil stays Ink Charcoal — subtle against dark bg -->
+  <circle cx="100" cy="100" r="90" stroke="#1E1B17" stroke-width="5.5" fill="none"/>
+  <circle cx="100" cy="160" r="90" stroke="#9A4B2E" stroke-width="5.5" fill="none"/>
+  <circle cx="100" cy="130" r="13" fill="#1E1B17"/>
+</svg>

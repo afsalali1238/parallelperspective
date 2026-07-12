@@ -1,0 +1,208 @@
+/* Parallel Perspective — shared stylesheet
+   Source of truth: website-docs/03-design-system.md (v1.3 guidelines extract)
+   Do not introduce new colors/fonts without updating that doc first. */
+
+:root {
+  --paper: #EDE8DC;
+  --panel: #E4DDCD;
+  --ink: #1E1B17;
+  --ink-soft: #3C362E;
+  --muted: #6E665A;
+  --muted-dark: #D8D0C0;
+  --line: #CDC3B0;
+  --accent: #9A4B2E;
+  --accent-soft: #B86B4A;
+
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'JetBrains Mono', monospace;
+  --font-quote: 'Newsreader', serif;
+}
+
+* { box-sizing: border-box; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.87rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 0.3em;
+  line-height: 1.05;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.6vw, 1.65rem);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 0.5em;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  margin: 0 0 1.4em;
+}
+
+.quote-line {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.08rem, 2.1vw, 1.28rem);
+  line-height: 1.85;
+  color: var(--ink-soft);
+}
+
+.dek {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0.6em 0 0;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 2.6em 0;
+}
+
+/* Lens divider — icon-only mark (Lockup C) used as a section break instead of a
+   bare rule. Reinforces the two-circle motif at each pacing beat in longer copy.
+   Never rotated or recolored (Principle 5 / misuse gallery). */
+.lens-divider {
+  display: block;
+  width: 26px;
+  height: auto;
+  margin: 2.8em auto;
+  opacity: 0.6;
+}
+
+/* In-body section label — small eyebrow used to break up longer pages into
+   named movements, without introducing a nav bar or numbered list. */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1em;
+}
+
+/* Pull quote — a single line pulled out and set large. Uses ink, not a second
+   accent (Principle 1: one accent per layout — accent stays on the mark/labels). */
+.pull-quote {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.3rem, 3.2vw, 1.6rem);
+  line-height: 1.55;
+  color: var(--ink);
+  text-align: center;
+  max-width: 520px;
+  margin: 1.6em auto 2.2em;
+}
+
+/* Panel block — bordered callout, reuses the one-accent left-border treatment
+   already established for internal spec docs, adapted here for public copy. */
+.panel-block {
+  background: var(--panel);
+  border-left: 2px solid var(--accent);
+  padding: 26px 28px;
+  margin: 0 0 2.2em;
+}
+
+.panel-block p {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.panel-block p + p { margin-top: 0.9em; }
+
+.panel-block b { color: var(--ink); }
+
+/* Landing */
+.landing-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 90px 24px;
+}
+
+.mark {
+  width: 92px;
+  height: auto;
+  margin-bottom: 28px;
+}
+
+.landing-wrap .eyebrow { margin-bottom: 1.6em; }
+
+.landing-wrap .quote-line {
+  max-width: 560px;
+  margin: 0 0 2.2em;
+}
+
+.quiet-link {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+/* invisible expanded hit area — keeps the quiet visual footprint,
+   widens the tappable zone on touch devices (WCAG 2.5.5, AAA best practice) */
+.quiet-link::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  bottom: -14px;
+  left: -10px;
+  right: -10px;
+}
+
+.quiet-link:hover {
+  color: var(--accen
