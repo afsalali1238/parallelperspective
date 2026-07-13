@@ -45,6 +45,7 @@ body {
   font-size: 0.87rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 main {
@@ -165,7 +166,6 @@ h2 {
 /* Landing */
 .landing-wrap {
   position: relative;
-  overflow: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
