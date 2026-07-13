@@ -270,13 +270,15 @@ h2 {
   right: -10px;
 }
 
-.quiet-link:hover {
-  color: var(--accent);
-}
+@media (hover: hover) and (pointer: fine) {
+  .quiet-link:hover {
+    color: var(--accent);
+  }
 
-.quiet-link:hover::after {
-  background: var(--accent);
-  transform: scaleX(1.15);
+  .quiet-link:hover::after {
+    background: var(--accent);
+    transform: scaleX(1.15);
+  }
 }
 
 a:focus-visible {
@@ -331,8 +333,10 @@ footer.site a::before {
   left: -10px;
   right: -10px;
 }
-footer.site a:hover { color: var(--accent); }
-footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15); }
+@media (hover: hover) and (pointer: fine) {
+  footer.site a:hover { color: var(--accent); }
+  footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15); }
+}
 
 /* Manifesto page */
 .page-header {
@@ -554,7 +558,7 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
   .reach-out-body .context-line,
   .reach-out-body #reach-out-action,
   .reach-out-body .confirmation {
-    animation: fadeUp 1ms ease both;
+    animation: fadeUp 1ms cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-timeline: view();
     animation-range: entry 0% entry 30%;
   }
@@ -596,8 +600,10 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
   transition: opacity 220ms ease;
 }
 
-.site-nav a:hover .nav-mark {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .site-nav a:hover .nav-mark {
+    opacity: 1;
+  }
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -635,13 +641,23 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
 
 /* ═══ REDUCED MOTION ═══ */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes landingEntrance {
+    0%   { opacity: 0; transform: translateY(0); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes gentleDrift {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  @keyframes eyeBlink {
+    0%, 100% { transform: scaleY(1); }
+  }
+  .quiet-link:hover::after,
+  footer.site a:hover::after {
+    transform: none !important;
   }
 }
 
