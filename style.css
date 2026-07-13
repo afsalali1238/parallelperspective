@@ -192,6 +192,23 @@ h2 {
   animation: gentleDrift 8s ease-in-out infinite;
 }
 
+/* The watermark holds the full mark now, including the pupil — and blinks.
+   Vertical-scale only, no opacity/blur tricks, so it stays flat. Slow rest
+   period with one brief close, like the eye is actually watching rather
+   than just decorating. transform-box: fill-box keeps the pivot on the
+   shape's own centre regardless of viewBox math. */
+.hero-mark-bg__eye {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: eyeBlink 12s ease-in-out infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 88% { transform: scaleY(1); }
+  92%     { transform: scaleY(0.05); }
+  96%, 100% { transform: scaleY(1); }
+}
+
 .landing-wrap > *:not(.hero-mark-bg) {
   position: relative;
   z-index: 1;
@@ -534,6 +551,18 @@ footer.site a:hover::after { background: var(--accent); transform: scaleX(1.15);
     animation-timeline: view();
     animation-range: entry 0% entry 30%;
   }
+}
+
+/* ── Scroll-driven reveals — fallback for browsers without
+   animation-timeline: view() (Safari, Firefox as of this writing).
+   Applied via reveal-fallback.js, which no-ops entirely in browsers
+   where the @supports block above already runs. ── */
+.js-reveal-pending {
+  opacity: 0;
+}
+
+.js-reveal-visible {
+  animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ── Minimal navigation ── */
