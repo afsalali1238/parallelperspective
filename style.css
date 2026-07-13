@@ -192,7 +192,7 @@ h2 {
   animation: gentleDrift 8s ease-in-out infinite;
 }
 
-.landing-wrap > * {
+.landing-wrap > *:not(.hero-mark-bg) {
   position: relative;
   z-index: 1;
 }
