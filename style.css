@@ -175,6 +175,13 @@ h2 {
   padding: 90px 24px;
 }
 
+.logo-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Oversized watermark of the mark, sitting behind the hero content. Flat only
    (no gradient/blur/glow) — scale and opacity are the only variables used,
    both already-established techniques in the system (see §02 on-Sienna
@@ -182,7 +189,7 @@ h2 {
    still reading as two distinct tones). Geometry is the locked r=90/d=60. */
 .hero-mark-bg {
   position: absolute;
-  top: 38%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: clamp(440px, 62vw, 760px);
